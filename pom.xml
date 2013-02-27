@@ -20,7 +20,6 @@
         <hive.version>0.9.0</hive.version>
         <hbase.version>0.94.4</hbase.version>
         <pig.version>0.10.1</pig.version>
-        <giraph.version>0.2-SNAPSHOT</giraph.version>
     </properties>
     <version>0.1-SNAPSHOT</version>
 
@@ -133,13 +132,6 @@
             <version>${pig.version}</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>org.apache.giraph</groupId>
-            <artifactId>giraph</artifactId>
-            <version>${giraph.version}</version>
-            <scope>compile</scope>
-        </dependency>
-
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
