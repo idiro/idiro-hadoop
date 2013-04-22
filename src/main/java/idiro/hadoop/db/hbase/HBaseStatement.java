@@ -116,7 +116,7 @@ public class HBaseStatement{
 		HBaseChecker hbCh = new HBaseChecker(this);
 		Set<String> res = new LinkedHashSet<String>();
 		if(!hbCh.isTableExist(tableName)){
-			logger.warn("Table does not exists");
+			logger.warn("Table "+tableName+" does not exists");
 			return res;
 		}
 
@@ -162,7 +162,7 @@ public class HBaseStatement{
 		HBaseChecker hbCh = new HBaseChecker(this);
 		Map<String,String> res = new LinkedHashMap<String,String>();
 		if(!hbCh.isTableExist(tableName)){
-			logger.warn("Table does not exists");
+			logger.warn("Table "+tableName+" does not exists");
 			return res;
 		}
 
@@ -223,7 +223,7 @@ public class HBaseStatement{
 				hm.getConn().deleteTable(tableName);
 				ok = true;
 			} catch (IOException e) {
-				logger.error("Cannot delete the table");
+				logger.error("Cannot delete the table"+tableName);
 				logger.error(e.getMessage());
 			} catch (SQLException e) {
 				logger.error("Cannot execute a query");
@@ -317,6 +317,8 @@ public class HBaseStatement{
 		if(hbCh.isTableExist(tableName)){
 			ok = false;
 		}else{
+			logger.info("Create table "+tableName);
+			
 			//Get the features (create if necessary)
 			Map<String,String> featNameWithId = hm.getMapFeatures(features);
 			logger.info("The features are: \nKey"+featNameWithId.keySet()+", \nvalue:"+featNameWithId.values());
