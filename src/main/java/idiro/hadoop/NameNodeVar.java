@@ -31,9 +31,7 @@ public class NameNodeVar {
 	}
 	
 	public static void set(String nameNodeURI){
-		if(instance.nameNodeURI == null){
-			instance.nameNodeURI = nameNodeURI;
-		}
+		instance.nameNodeURI = nameNodeURI;
 	}
 	
 	/**
