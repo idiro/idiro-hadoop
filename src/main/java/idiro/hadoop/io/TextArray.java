@@ -35,8 +35,10 @@ public class TextArray implements Writable{
 	public void readFields(DataInput in) throws IOException {
 		int size = in.readInt();
 		value = new Text[size];
-		for (int i=0; i<value.length; i++)
+		for (int i=0; i<value.length; i++){
+			value[i] = new Text();
 			value[i].readFields(in);
+		}
 	}
 
 	public void write(DataOutput out) throws IOException {
