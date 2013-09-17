@@ -27,12 +27,12 @@
         <repository>
             <id>internal</id>
             <name>Internal Release Repository</name>
-            <url>http://ns:8080/archiva/repository/internal</url>
+            <url>scp://dev.local.net:/var/www/html/apache-archiva-1.3.6/data/repositories/internal</url>
         </repository>
         <snapshotRepository>
             <id>snapshots</id>
             <name>Internal Snapshot Repository</name>
-            <url>http://ns:8080/archiva/repository/snapshots</url>
+            <url>scp://dev.local.net:/var/www/html/apache-archiva-1.3.6/data/repositories/snapshots</url>
         </snapshotRepository>
 
         <site>
@@ -71,14 +71,21 @@
     </reporting>
 
     <build>
-        <pluginManagement>
+    <extensions>
+                  <extension>
+                      <groupId>org.apache.maven.wagon</groupId>
+                      <artifactId>wagon-ssh</artifactId>
+                      <version>2.5</version>
+                  </extension>     
+        </extensions>
+        <!--  <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
                     <version>3.2</version>
                     <dependencies>
-                        <dependency><!-- add support for ssh/scp -->
+                        <dependency>
                             <groupId>org.apache.maven.wagon</groupId>
                             <artifactId>wagon-ssh</artifactId>
                             <version>1.0</version>
@@ -86,7 +93,7 @@
                     </dependencies>
                 </plugin>
             </plugins>
-        </pluginManagement>
+        </pluginManagement>-->
     </build> 
 
 
