@@ -18,8 +18,9 @@ public class JdbcHdfsPrefsDetails extends JdbcPrefsDetails{
 	
 	public JdbcHdfsPrefsDetails(String dburl) throws Exception{
 		super(dburl);
-		if(prefs.get(userKey, "").isEmpty())
-			throw new Exception("The database url is not link to any database details");
+		//Make sure details exist
+		//if(prefs.get(userKey, "").isEmpty())
+		//	throw new Exception("The database url is not link to any database details");
 	}
 	
 	public JdbcHdfsPrefsDetails(String dburl,String username,String password){
