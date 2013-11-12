@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Random;
 
 import org.apache.hadoop.io.Writable;
+import org.apache.log4j.Logger;
 
 /**
  * Writable class for Double Array values.
@@ -15,6 +16,7 @@ public class DoubleArrayWritable implements Writable {
 
 	private static Random random = new Random(42);
 	private double[] value = null;
+	private Logger logger = Logger.getLogger(getClass());
 
 	public DoubleArrayWritable() {
 		value = new double[0];
@@ -42,6 +44,7 @@ public class DoubleArrayWritable implements Writable {
 	
 	public void readFields(DataInput in) throws IOException {
 		int size = in.readInt();
+		logger.info("DataInput Size: "+size);
 		value = new double[size];
 		for (int i=0; i<value.length; i++)
 			value[i] = in.readDouble();
@@ -72,6 +75,11 @@ public class DoubleArrayWritable implements Writable {
 		}
 		return ans;
 	}
+	
+	public void set(double[] newVal){
+		value = newVal;
+	}
+	
 
 	/**
 	 * Sets a = a + alpha*b.
@@ -145,5 +153,6 @@ public class DoubleArrayWritable implements Writable {
 	public int length(){
 		return value.length;
 	}
+
 }
 
