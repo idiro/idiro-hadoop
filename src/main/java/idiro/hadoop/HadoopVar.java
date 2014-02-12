@@ -22,10 +22,11 @@ public class HadoopVar {
 	public static final String key_s_zkport = "zkPort";
 	public static final String key_s_hive = "hiveURI";
 	public static final String key_s_adminMetastoreURI = "metastore";
+	public static final String key_s_IdiroEngineHDFSPath = "idiroenginehdfspath";
 	
 	private static Logger logger = Logger.getLogger(HadoopVar.class);
 	
-	private static String key[] = {key_s_zkquorum,key_s_zkport,key_s_hive,key_s_adminMetastoreURI};
+	private static String key[] = {key_s_zkquorum,key_s_zkport,key_s_hive,key_s_adminMetastoreURI,key_s_IdiroEngineHDFSPath};
 
 
 	/**
