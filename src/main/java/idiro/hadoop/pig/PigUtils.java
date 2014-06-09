@@ -1,5 +1,11 @@
 package idiro.hadoop.pig;
 
+import java.util.Iterator;
+import java.util.Map;
+
+import org.apache.hadoop.fs.Path;
+
+
 public class PigUtils {
 	
 	public static String getDelimiter(char character){
@@ -19,6 +25,36 @@ public class PigUtils {
 			}
 		}
 		return delimiter;
+	}
+
+	public static String getLoadLineQuery(Path dataPath, String dataFormat, String delimiter, Map<String,String> features) {
+		String query = "IN = LOAD '" + dataPath.toString() + "' USING ";
+		if (dataFormat.equals("TEXTFILE")) {
+			query += "PigStorage('"
+					+ PigUtils.getDelimiter(delimiter.charAt(0))
+					+ "') ";
+		} else if (dataFormat.equals("BINFILE")) {
+			query += "BinStorage() ";
+		}
+		query += " AS (";
+		Iterator<String> it = features.keySet().iterator();
+		while(it.hasNext()){
+			String featureName = it.next();
+			query += featureName
+					+ ":"
+					+ convertToPigType(features.get(featureName)) + ",";
+		}
+		query = query.substring(0, query.length() - 1);
+		query += ");\n\n";
+		return query;
+	}
+	
+
+	public static String convertToPigType(String type) {
+		if (type.equalsIgnoreCase("STRING")) {
+			type = "CHARARRAY";
+		}
+		return type.toLowerCase();
 	}
 
 }
