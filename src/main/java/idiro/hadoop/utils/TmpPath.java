@@ -20,7 +20,8 @@ import org.apache.log4j.Logger;
 public class TmpPath {
 
 	private static final Logger logger = Logger.getLogger(TmpPath.class);
-	public static final String tmpPath = "/tmp/idiro/";
+	public static final String tmpPath = "/tmp/idiro/",
+			tmpUserPath = "/user/"+System.getProperty("user.name")+"/tmp";
 	public static final int length = 15;
 
 
@@ -49,6 +50,34 @@ public class TmpPath {
 	public static Path create(String suffix) throws Exception{
 		return create("",suffix);
 	}
+	
+	/**
+	 * Create a temporary path in user home folder that does not exists.
+	 * 
+	 * Create a temporary path that does not exists
+	 * and with a random name
+	 * @return
+	 * @throws Exception
+	 */
+	public static Path create_user() throws Exception{
+		return create_user("","");
+	}
+
+	/**
+	 * Create a temporary path in user home folder that does not exists.
+	 * 
+	 * Create a temporary path that does not exists
+	 * and with a random name with a suffix.
+	 * 
+	 * @param suffix
+	 * @return
+	 * @throws Exception
+	 */
+	public static Path create_user(String suffix) throws Exception{
+		return create_user("",suffix);
+	}
+	
+	
 
 	/**
 	 * Create a temporary path that does not exists.
@@ -61,8 +90,32 @@ public class TmpPath {
 	 * @throws Exception
 	 */
 	public static Path create(String prefix, String suffix) throws Exception{
+		return create(true,prefix,suffix);
+	}
+	
+	/**
+	 * Create a temporary path that does not exists.
+	 * 
+	 * Create a temporary path that does not exists
+	 * and with a random name with a prefix and a suffix.
+	 * @param prefix
+	 * @param suffix
+	 * @return
+	 * @throws Exception
+	 */
+	public static Path create_user(String prefix, String suffix) throws Exception{
+		return create(false,prefix,suffix);
+	}
+	
+	
+	private static Path create(boolean sys, String prefix, String suffix) throws Exception{
+		StringBuilder strb = null;
+		if(sys){
+			strb = new StringBuilder(tmpPath);
+		}else{
+			strb = new StringBuilder(tmpUserPath);
+		}
 		
-		StringBuilder strb = new StringBuilder(tmpPath);
 		if(prefix != null && !prefix.isEmpty()){
 			strb.append(prefix).append('_');
 		}
