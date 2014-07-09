@@ -53,6 +53,14 @@ public class PigUtils {
 	public static String convertToPigType(String type) {
 		if (type.equalsIgnoreCase("STRING")) {
 			type = "CHARARRAY";
+		}else if(type.equalsIgnoreCase("DATE")){
+			type = "DATETIME";
+		}else if(type.equalsIgnoreCase("TIMESTAMP")){
+			type = "DATETIME";
+		}else if(type.equalsIgnoreCase("CHAR")){
+			type = "CHARARRAY";
+		}else if(type.equalsIgnoreCase("CATEGORY")){
+			type = "CHARARRAY";
 		}
 		return type.toLowerCase();
 	}

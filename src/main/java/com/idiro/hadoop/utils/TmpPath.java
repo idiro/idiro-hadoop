@@ -22,7 +22,7 @@ public class TmpPath {
 
 	private static final Logger logger = Logger.getLogger(TmpPath.class);
 	public static final String tmpPath = "/tmp/idiro/",
-			tmpUserPath = "/user/"+System.getProperty("user.name")+"/tmp";
+			tmpUserPath = "/user/"+System.getProperty("user.name")+"/tmp/";
 	public static final int length = 15;
 
 
