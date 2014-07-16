@@ -21,7 +21,7 @@
         <hbase.version>0.94.4</hbase.version>
         <pig.version>0.12.0</pig.version>
     </properties>
-    <version>0.1</version>
+    <version>0.2-SNAPSHOT</version>
 
     <distributionManagement>
           <repository>
