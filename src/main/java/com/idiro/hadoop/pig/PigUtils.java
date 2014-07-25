@@ -28,13 +28,15 @@ public class PigUtils {
 	}
 
 	public static String getLoadLineQuery(Path dataPath, String dataFormat, String delimiter, Map<String,String> features) {
-		String query = "IN = LOAD '" + dataPath.toString() + "' USING ";
+		String query = "IN = LOAD '" + dataPath.toString() ;
 		if (dataFormat.equals("TEXTFILE")) {
-			query += "PigStorage('"
+			query += "' USING PigStorage('"
 					+ PigUtils.getDelimiter(delimiter.charAt(0))
 					+ "') ";
 		} else if (dataFormat.equals("BINFILE")) {
-			query += "BinStorage() ";
+			query += "' USING BinStorage() ";
+		} else if (dataFormat.equals("COMPRESSED")){
+			query += ".bz2';";
 		}
 		query += " AS (";
 		Iterator<String> it = features.keySet().iterator();
