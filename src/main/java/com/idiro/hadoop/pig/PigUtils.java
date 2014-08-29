@@ -29,7 +29,7 @@ public class PigUtils {
 
 	public static String getLoadLineQuery(Path dataPath, String dataFormat, String delimiter, Map<String,String> features) {
 		String query = "IN = LOAD '" + dataPath.toString() + "' USING ";
-		if (dataFormat.equals("TEXTFILE")) {
+		if (dataFormat.equals("TEXTFILE")  || dataFormat.equals("COMPRESSED")) {
 			query += "PigStorage('"
 					+ PigUtils.getDelimiter(delimiter.charAt(0))
 					+ "') ";
