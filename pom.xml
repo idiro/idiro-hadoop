@@ -15,13 +15,13 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <idiro-base.version>0.1-SNAPSHOT</idiro-base.version>
+        <idiro-base.version>0.1</idiro-base.version>
         <hadoop.version>1.0.4</hadoop.version>
         <hive.version>0.9.0</hive.version>
         <hbase.version>0.94.4</hbase.version>
         <pig.version>0.12.0</pig.version>
     </properties>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.2-SNAPSHOT</version>
 
     <distributionManagement>
           <repository>

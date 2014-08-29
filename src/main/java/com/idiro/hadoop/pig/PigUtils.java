@@ -34,7 +34,7 @@ public class PigUtils {
 					+ PigUtils.getDelimiter(delimiter.charAt(0))
 					+ "') ";
 		} else if (dataFormat.equals("BINFILE")) {
-			query += "BinStorage() ";
+			query += "' USING BinStorage() ";
 		}
 		query += " AS (";
 		Iterator<String> it = features.keySet().iterator();
