@@ -56,24 +56,8 @@ public class HadoopPreferences {
 
 	private Logger logger = Logger.getLogger(HadoopPreferences.class);
 	private static Configuration conf;
-	private static boolean init = false;
 
 	private Path path;
-
-	/**
-	 * Initialise the preferences
-	 * 
-	 * @return
-	 */
-	protected static boolean init(){
-		if(!init){
-			if(NameNodeVar.isInit()){
-				conf = NameNodeVar.getConf();
-				init = true;
-			}
-		}
-		return init;
-	}
 
 	/**
 	 * Read/Write in the clazz package directory, system side.
@@ -87,7 +71,6 @@ public class HadoopPreferences {
 	 * @return
 	 */
 	public static HadoopPreferences systemNodeForPackage(Class<?> clazz){
-		init();
 		return new HadoopPreferences(
 				new Path("/etc/java/prefs/"+
 						clazz.getPackage().getName().replace('.', '/')+"/package.properties"));
@@ -103,7 +86,6 @@ public class HadoopPreferences {
 	 * @return
 	 */
 	public static HadoopPreferences userNodeForPackage(Class<?> clazz){
-		init();
 		return new HadoopPreferences(
 				new Path("/user/"+System.getProperty("user.name")+"/.prefs/java/"+
 						clazz.getPackage().getName().replace('.', '/')+"/package.properties"));
@@ -171,7 +153,7 @@ public class HadoopPreferences {
 	public String get(String key, String defaultValue){
 		try{
 			//Read all the file and save the keys
-			FileSystem fileSystem = FileSystem.get(conf);
+			FileSystem fileSystem = NameNodeVar.getFS();
 
 			if (!fileSystem.exists(path)) {
 				logger.debug("File '"+path.getName()+"' does not exists");
