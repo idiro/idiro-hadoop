@@ -1,7 +1,10 @@
 package com.idiro.hadoop;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -59,9 +62,49 @@ public class NameNodeVar {
 	public static Configuration getConf() {
 		Configuration conf = new Configuration();
 		if (isInit()) {
-			conf.set("fs.default.name", NameNodeVar.get());
+
+			List<File> list = getFiles(System.getProperty("java.class.path"));
+			for (File file: list) {
+				if(file.getPath().contains("hadoop-client")){ //hadoop version 2.X
+					conf.set("fs.defaultFS", NameNodeVar.get());
+				}else{
+					conf.set("fs.default.name", NameNodeVar.get());
+				}
+			}
+
 		}
 		return conf;
+	}
+
+	/**
+	 * list files in the given directory and subdirs (with recursion)
+	 * @param paths
+	 * @return
+	 */
+	public static List<File> getFiles(String paths) {
+		List<File> filesList = new ArrayList<File>();
+		for (final String path : paths.split(File.pathSeparator)) {
+			final File file = new File(path);
+			if( file.isDirectory()) {
+				recurse(filesList, file);
+			}
+			else {
+				filesList.add(file);
+			}
+		}
+		return filesList;
+	}
+
+	private static void recurse(List<File> filesList, File f) { 
+		File list[] = f.listFiles();
+		for (File file : list) {
+			if (file.isDirectory()) {
+				recurse(filesList, file);
+			}
+			else {
+				filesList.add(file);
+			}
+		}
 	}
 
 	/**
@@ -84,13 +127,13 @@ public class NameNodeVar {
 				JobClient theJobClient = new JobClient(new InetSocketAddress(
 						instance.getJobTracker().substring(0,
 								instance.getJobTracker().indexOf(":")),
-						Integer.valueOf(
-								instance.getJobTracker()
+								Integer.valueOf(
+										instance.getJobTracker()
 										.substring(
 												instance.getJobTracker()
-														.indexOf(":") + 1))
-								.intValue()), instance.getConf());
-				
+												.indexOf(":") + 1))
+												.intValue()), instance.getConf());
+
 				slaves = theJobClient.getClusterStatus().getTaskTrackers();
 			} catch (IOException e) {
 				System.out.println(e);

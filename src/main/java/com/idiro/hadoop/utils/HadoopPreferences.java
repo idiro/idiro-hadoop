@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
 
-import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
@@ -55,7 +54,6 @@ import com.idiro.hadoop.NameNodeVar;
 public class HadoopPreferences {
 
 	private Logger logger = Logger.getLogger(HadoopPreferences.class);
-	private static Configuration conf;
 
 	private Path path;
 
@@ -110,7 +108,7 @@ public class HadoopPreferences {
 	 */
 	public void put(String key,String value){
 		TreeMap<String,String> map = new TreeMap<String,String>();
-	
+
 		String[] keys = keys();
 		for(String oldKey: keys){
 			map.put(oldKey, get(oldKey,""));
@@ -118,7 +116,7 @@ public class HadoopPreferences {
 		map.put(key, value);
 		write(map);
 	}
-	
+
 	/**
 	 * Remove a preference.
 	 * 
@@ -127,16 +125,16 @@ public class HadoopPreferences {
 	 */
 	public void remove(String key){
 		TreeMap<String,String> map = new TreeMap<String,String>();
-		
+
 		String[] keys = keys();
 		for(String oldKey: keys){
 			map.put(oldKey, get(oldKey,""));
 		}
-		
+
 		map.remove(key);
 		write(map);
 	}
-	
+
 
 	/**
 	 * Get a preference.
@@ -195,7 +193,7 @@ public class HadoopPreferences {
 	protected String[] keys(){
 		try{
 			//Read all the file and save the keys
-			FileSystem fileSystem = FileSystem.get(conf);
+			FileSystem fileSystem = NameNodeVar.getFS();
 
 			if (!fileSystem.exists(path)) {
 				logger.debug("File '"+path.getName()+"' does not exists");
@@ -240,7 +238,7 @@ public class HadoopPreferences {
 		try{
 
 
-			FileSystem fileSystem = FileSystem.get(conf);
+			FileSystem fileSystem = NameNodeVar.getFS();
 
 			// Check if the file already exists
 			if (fileSystem.exists(path)) {
