@@ -15,7 +15,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <idiro-base.version>0.1</idiro-base.version>
+        <idiro-base.version>0.2-SNAPSHOT</idiro-base.version>
 	<!-- hadoop-client for 2.X -->
 	<hadoop.artifactId>hadoop-core</hadoop.artifactId>
         <hadoop.version>1.0.4</hadoop.version>

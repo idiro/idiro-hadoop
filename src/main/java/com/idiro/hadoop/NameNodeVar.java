@@ -135,6 +135,7 @@ public class NameNodeVar {
 												.intValue()), instance.getConf());
 
 				slaves = theJobClient.getClusterStatus().getTaskTrackers();
+				
 			} catch (IOException e) {
 				System.out.println(e);
 			}
@@ -143,4 +144,5 @@ public class NameNodeVar {
 
 		return slaves;
 	}
+	
 }
