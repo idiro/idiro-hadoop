@@ -19,7 +19,7 @@
 	<!-- hadoop-client for 2.X -->
 	<hadoop.artifactId>hadoop-core</hadoop.artifactId>
         <hadoop.version>1.0.4</hadoop.version>
-        <hive.version>0.12.0</hive.version>
+        <hive.version>0.13.0</hive.version>
         <hbase.version>0.94.4</hbase.version>
         <pig.version>0.12.0</pig.version>
     </properties>
