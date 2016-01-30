@@ -23,7 +23,7 @@
         <hbase.version>0.94.4</hbase.version>
         <pig.version>0.12.0</pig.version>
     </properties>
-    <version>${hadoop.version}-0.2-SNAPSHOT</version>
+    <version>${hadoop.version}-0.3</version>
 
     <distributionManagement>
           <repository>

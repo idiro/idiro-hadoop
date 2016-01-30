@@ -61,7 +61,7 @@ public class HdfsFileChecker extends Checker{
 	protected boolean init(Path path){
 		boolean init = true;
 		try {
-			fS = FileSystem.get(NameNodeVar.getConf());
+			fS = NameNodeVar.getFS();
 			this.path = path;
 			fileCanonicalName = path.getName();
 		} catch (IOException e) {
