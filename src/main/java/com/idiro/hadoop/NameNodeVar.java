@@ -83,11 +83,11 @@ public class NameNodeVar {
 		if (isInit()) {
 
 			List<File> list = getFiles(System.getProperty("java.class.path"));
+			conf.set("fs.default.name", NameNodeVar.get());
 			for (File file: list) {
 				if(file.getPath().contains("hadoop-client")){ //hadoop version 2.X
 					conf.set("fs.defaultFS", NameNodeVar.get());
-				}else{
-					conf.set("fs.default.name", NameNodeVar.get());
+					break;
 				}
 			}
 

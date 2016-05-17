@@ -64,8 +64,13 @@ public class HdfsFileChecker extends Checker{
 	 * @param filename name of the file to check
 	 */
 	public HdfsFileChecker(String filename) {
-		if(filename != null){
-			initialized = init( new Path(filename));
+		if(filename != null && !filename.isEmpty()){
+			try{
+				initialized = init( new Path(filename));
+			}catch(Exception e){
+				logger.debug(e,e);
+				initialized = false;
+			}
 		}else{
 			logger.error("Try to check a file which has no name");
 			initialized = false;
