@@ -34,6 +34,7 @@ support@redsqirl.com
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <idiro-base.version>0.3</idiro-base.version>
 	<!-- hadoop-core for 1.X -->
+	<!-- hadoop-core for mapr, version 1.0.3-mapr-4.1.0 -->
 	<hadoop.artifactId>hadoop-client</hadoop.artifactId>
         <hadoop.version>2.7.0</hadoop.version>
         <hive.version>1.2.1</hive.version>
@@ -65,6 +66,11 @@ support@redsqirl.com
             <id>repository.cloudera.com</id>
             <name>repository.cloudera.com-releases</name>
             <url>https://repository.cloudera.com/artifactory/datanucleus</url>
+        </repository>
+        <repository>
+            <id>repository.mapr.com</id>
+            <name>repository.mapr.com-releases</name>
+	    <url>http://repository.mapr.com/nexus/content/groups/mapr-public</url>
         </repository>
     </repositories>
 
