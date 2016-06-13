@@ -51,13 +51,26 @@ support@redsqirl.com
 	</repository>
     </distributionManagement>
 
+    <repositories>
+	<repository>
+	    <id>repository.cloudera.com</id>
+	    <name>repository.cloudera.com-releases</name>
+	    <url>https://repository.cloudera.com/artifactory/datanucleus</url>
+	</repository>
+	<repository>
+	    <id>repository.mapr.com</id>
+	    <name>repository.mapr.com-releases</name>
+	    <url>http://repository.mapr.com/nexus/content/groups/mapr-public</url>
+	</repository>
+    </repositories>
+
     <organization>
-        <name>Idiro Technologies</name>
-        <url>http://www.idiro.com</url>
+	<name>Idiro Technologies</name>
+	<url>http://www.idiro.com</url>
     </organization>
 
     <reporting>
-        <plugins>
+	<plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
