@@ -23,11 +23,22 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.mapred.JobClient;
+import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * Stores the hadoop namenode URI in memory.
@@ -40,9 +51,16 @@ import org.apache.hadoop.mapred.JobClient;
  */
 public class NameNodeVar {
 
+	public static final String SERVER_PRINCIPAL_KEY = "user.principal"; 
+	public static final String SERVER_KEYTAB_KEY = "user.keytab"; 
+	
+	private static Logger logger = Logger.getLogger(NameNodeVar.class);
+	
 	private String jobtracker;
 
 	private String nameNodeURI;
+
+	private Configuration conf;
 
 	private static NameNodeVar instance = new NameNodeVar();
 
@@ -79,20 +97,10 @@ public class NameNodeVar {
 	 * @return
 	 */
 	public static Configuration getConf() {
-		Configuration conf = new Configuration();
-		if (isInit()) {
-
-			List<File> list = getFiles(System.getProperty("java.class.path"));
-			conf.set("fs.default.name", NameNodeVar.get());
-			for (File file: list) {
-				if(file.getPath().contains("hadoop-client")){ //hadoop version 2.X
-					conf.set("fs.defaultFS", NameNodeVar.get());
-					break;
-				}
-			}
-
+		if(instance.conf == null){
+			initConf();
 		}
-		return conf;
+		return new Configuration(instance.conf);
 	}
 
 	/**
@@ -134,7 +142,7 @@ public class NameNodeVar {
 	 */
 	public static FileSystem getFS() throws IOException {
 		if (isInit()) {
-			return FileSystem.get(NameNodeVar.getConf());
+			return FileSystem.get(getConf());
 		}
 		return null;
 	}
@@ -164,4 +172,51 @@ public class NameNodeVar {
 		return slaves;
 	}
 	
+	protected static void initConf(){
+		if (isInit()) {
+			Configuration conf = new Configuration();
+			List<File> list = getFiles(System.getProperty("java.class.path"));
+			conf.set("fs.default.name", NameNodeVar.get());
+			for (File file: list) {
+				if(file.getPath().contains("hadoop-client")){ //hadoop version 2.X
+					conf.set("fs.defaultFS", NameNodeVar.get());
+					break;
+				}
+			}
+			instance.conf = conf;
+		}
+	}
+	
+	public static void addToDefaultConf(String name, String value){
+		if(instance.conf == null){
+			initConf();
+		}
+		if(instance.conf != null){
+			instance.conf.set(name, value);
+		}
+	}
+	
+	public static void removeFromDefaultConf(String name){
+		if(instance.conf == null){
+			initConf();
+		}
+		if(instance.conf != null){
+			instance.conf.unset(name);
+		}
+	}
+	
+	public static String getConfStr(){
+		return getConfStr(getConf());
+	}
+	
+	public static String getConfStr(Configuration conf){
+		String ans = "";
+		Map<String, String> params = conf.getValByRegex(".*");
+		Iterator<Entry<String,String>> it = params.entrySet().iterator();
+		while(it.hasNext()){
+			Entry<String,String> cur = it.next();
+			ans += cur.getKey()+":"+cur.getValue()+"\n";
+		}
+		return ans;
+	}
 }

@@ -107,7 +107,7 @@ public class HdfsFileChecker extends Checker{
 			exist = fS.exists(path);
 			logger.debug("check existence of "+fileCanonicalName+", result: "+exist);	
 		} catch (Exception e) {
-			systemErrorLog();
+			systemErrorLog(e);
 		}
 		return exist;
 	}
@@ -125,7 +125,7 @@ public class HdfsFileChecker extends Checker{
 			logger.debug("check if "+fileCanonicalName+" is a directory, result: "+isDir);
 
 		} catch (Exception e) {
-			systemErrorLog();
+			systemErrorLog(e);
 		}
 		return isDir;
 	}
@@ -142,7 +142,7 @@ public class HdfsFileChecker extends Checker{
 			}
 			logger.debug("check if "+fileCanonicalName+" is a file, result: "+isF);
 		} catch (Exception e) {
-			systemErrorLog();
+			systemErrorLog(e);
 		}
 		return isF;
 	}
@@ -157,7 +157,7 @@ public class HdfsFileChecker extends Checker{
 			size = fS.getFileStatus(path).getLen();
 			logger.debug("check the size of "+fileCanonicalName+", result: "+size);
 		} catch (Exception e) {
-			systemErrorLog();
+			systemErrorLog(e);
 		}
 		return size;
 	}
@@ -166,8 +166,8 @@ public class HdfsFileChecker extends Checker{
 	/**
 	 * Send a log for a system exception
 	 */
-	private void systemErrorLog(){
-		logger.error("File "+fileCanonicalName+": system exception, please check the right of the path and the system settings");
+	private void systemErrorLog(Exception e){
+		logger.error("File "+fileCanonicalName+": system exception, please check the right of the path and the system settings",e);
 	}
 
 	/**
